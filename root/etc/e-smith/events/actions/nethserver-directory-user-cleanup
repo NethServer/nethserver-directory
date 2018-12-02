@@ -1,8 +1,8 @@
 #!/usr/bin/perl -w
 
 #
-# Copyright (C) 2016 Nethesis S.r.l.
-# http://www.nethesis.it - nethserver@nethesis.it
+# Copyright (C) 2018 Nethesis S.r.l.
+# http://www.nethesis.it - support@nethesis.it
 #
 # This script is part of NethServer.
 #
@@ -17,29 +17,25 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with NethServer.  If not, see COPYING.
+# along with NethServer.  If not, see <http://www.gnu.org/licenses/>.
 #
 
 use strict;
+use Errno;
+use File::Path qw(remove_tree);
 
 my $event = shift;
-my $userName = shift;;
+my $userName = shift;
 
-#------------------------------------------------------------
-# Delete the Unix account.
-#------------------------------------------------------------
-
-die "Username argument missing." unless defined ($userName);
-
-# Handle users with and without domain part
-if ($userName =~ /@/) {
-    $userName = (split(/@/,$userName))[0];
+if(! defined ($userName)) {
+    die "Username argument missing\n";
 }
 
-my $discard = `/usr/sbin/luserdel '$userName'`;
-if ($? != 0)
-{
-    die "Failed to delete account $userName.\n";
-}
+#accept user@domain format
+$userName =~ s/@.*//;
 
-exit (0);
+# Remove home
+if ( -d "/var/lib/nethserver/home/$userName") {
+    remove_tree ("/var/lib/nethserver/home/$userName") ||
+        die "[ERROR] The home of $userName cannot be removed: $?";
+}
