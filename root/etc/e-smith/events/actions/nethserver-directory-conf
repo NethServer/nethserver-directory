@@ -113,6 +113,7 @@ my @configChangeList = (
 	 olcTLSVerifyClient => 'never',
 	 # dummy value, see delete below:
 	 olcTLSCACertificatePath => '/etc/openldap/certs',
+	 olcTLSDHParamFile => '/etc/openldap/certs/slapd.dh.params.pem',
     ]],
 
     # Refs #1491. Remove attribute, if set.  On CentOS-6.3 nss cert DB
