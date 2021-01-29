@@ -24,7 +24,7 @@
 # We grep a string of the default DH key, if true we create a DH key for the slapd service
 #
 
-if ! /usr/bin/grep -q 'MIIBCAKCAQEAou6/6s7X2gd+i8+' /etc/openldap/certs/slapd.dh.params.pem;then
+if ! /usr/bin/grep -q 'MIIBCAKCAQEAou6/6s7X2gd+i8+' /etc/openldap/certs/slapd.dh.params; then
     exit 0
 fi
 tmpfile=$(mktemp /tmp/slapd-create-dhparam.XXXXXXX)
@@ -33,6 +33,6 @@ trap "/usr/bin/rm -f ${tmpfile}" EXIT
 set -e # Exit immediately if any error occurs
 
 /usr/bin/openssl dhparam -out ${tmpfile} 2048
-/usr/bin/mv -f ${tmpfile} /etc/openldap/certs/slapd.dh.params.pem
-/usr/bin/chown root:ldap /etc/openldap/certs/slapd.dh.params.pem
-/usr/bin/chmod 440 /etc/openldap/certs/slapd.dh.params.pem
+/usr/bin/mv -f ${tmpfile} /etc/openldap/certs/slapd.dh.params
+/usr/bin/chown root:ldap /etc/openldap/certs/slapd.dh.params
+/usr/bin/chmod 440 /etc/openldap/certs/slapd.dh.params
