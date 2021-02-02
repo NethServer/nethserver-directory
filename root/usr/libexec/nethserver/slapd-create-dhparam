@@ -27,11 +27,6 @@
 if ! /usr/bin/grep -q 'MIIBCAKCAQEAou6/6s7X2gd+i8+' /etc/openldap/certs/slapd.dh.params; then
     exit 0
 fi
-
-# fix unable to write 'random state' 
-# https://bugzilla.redhat.com/show_bug.cgi?id=1256427
-export RANDFILE=$OPENSHIFT_DATA_DIR/.rnd
-
 tmpfile=$(mktemp /tmp/slapd-create-dhparam.XXXXXXX)
 trap "/usr/bin/rm -f ${tmpfile}" EXIT
 
