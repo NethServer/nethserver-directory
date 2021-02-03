@@ -1,6 +1,6 @@
 Name: nethserver-directory
 Summary: LDAP backend for user and group accounts
-Version: 3.4.2
+Version: 3.4.3
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -48,6 +48,9 @@ rm -rf %{buildroot}
 %config(noreplace) %attr (0440,root,ldap) /etc/openldap/certs/slapd.dh.params
 
 %changelog
+* Wed Feb 03 2021 Stephane de Labrusse <stephdl@de-labrusse.fr> - 3.4.3-1
+- Ejabberd TLS Handshake Failure - Bug NethServer/dev#6409
+
 * Tue Jan 12 2021 Davide Principi <davide.principi@nethesis.it> - 3.4.2-1
 - Password age changes are not applied - Bug NethServer/dev#6387
 
