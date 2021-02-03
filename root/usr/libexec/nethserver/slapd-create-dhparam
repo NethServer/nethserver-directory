@@ -28,7 +28,9 @@ if ! /usr/bin/grep -q 'MIIBCAKCAQEAou6/6s7X2gd+i8+' /etc/openldap/certs/slapd.dh
     exit 0
 fi
 tmpfile=$(mktemp /tmp/slapd-create-dhparam.XXXXXXX)
-trap "/usr/bin/rm -f ${tmpfile}" EXIT
+export RANDFILE=$(mktemp)
+
+trap "/usr/bin/rm -f ${tmpfile} ${RANDFILE}" EXIT
 
 set -e # Exit immediately if any error occurs
 
